@@ -19,6 +19,7 @@ const Calendar: React.FC = () => {
         fetch("http://localhost:3001/availableDays")
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 setData(data);
                 setAvailableDays(data);
             })
@@ -110,6 +111,7 @@ const Calendar: React.FC = () => {
         } else {
             setCurrentMonth(nextMonth);
         }
+        setPrevButtonDisabled(currentyear < currentYear || (currentyear === currentYear && currentmonth <= currentMonth));
     };
 
     const prevMonth = () => {
