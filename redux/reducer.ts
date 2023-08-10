@@ -24,7 +24,8 @@ const initialState = {
   currentProfessional: null,
   corporate: [],
   cart: [],
-  currCorporate: null
+  currCorporate: null,
+  newAddress: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -190,6 +191,11 @@ const appData = (state = initialState, action) => {
           ...state,
           currentTime: action.payload,
         };
+    case "NEWADDRESS":
+      return{
+        ...state,
+        NewAddress: action.payload,
+      }
     case "REMOVEALLDATA":
       return {
         ...state,
@@ -215,7 +221,8 @@ const appData = (state = initialState, action) => {
         cart: [],
         corporateUsers: [],
         currentDate:null,
-        currCorporate: null
+        currCorporate: null,
+        newAddress: null,
       };
     case "CURRENTDATE":
       return {

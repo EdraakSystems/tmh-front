@@ -11,6 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useDataHandler } from "@/utils/dataHandler";
+import { isEmptyArray } from "formik";
 
 const Booking2 = () => {
   const router = useRouter();
@@ -69,7 +70,7 @@ const Booking2 = () => {
     const itemExists = cart.filter((cartItem) => cartItem.id === item.id);
   
     // If the item does not exist, add it to the cart and update local data
-    if (!itemExists) {
+    if (itemExists.length < 1) {
       const myCart = [...cart, item];
       setCart(myCart);
   

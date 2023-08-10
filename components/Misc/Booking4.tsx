@@ -9,8 +9,10 @@ import { useDataHandler } from "@/utils/dataHandler"; // Import the useDataHandl
 
 const Booking4 = ({ loader, setLoader }) => {
   const {
-    reduxData
+    reduxData,
+    handleLocalData,
   } = useDataHandler(setLoader); // Use the useDataHandler hook to access the functions and state
+  
 
   useEffect(() => {
     console.log(reduxData)
@@ -108,7 +110,12 @@ const Booking4 = ({ loader, setLoader }) => {
                   <p className="w-full">{user[2] == null && user[3] == null ? (
                     <div className="flex w-full">
                       <label className="w-2/3">Enter the Address</label>
-                      <input className="border w-full" type="text" />
+                      <input className="border w-full"
+                      onChange={(item)=> handleLocalData({
+                        type: "address",
+                        data: item,
+                      })}
+                       type="text" />
                     </div>
                     ) : user[2]  }</p>
                 </div>
@@ -123,12 +130,26 @@ const Booking4 = ({ loader, setLoader }) => {
             <div className="w-full">
             <Select
               options={cities}
+              onChange={(item)=> handleLocalData({
+                type: "newcity",
+                data: item,
+              })}
               // onChange={(item) => {
               //   setLocale(item.value);
               // }}
               placeholder="City"
               styles={selectStyles}
             />
+            </div>
+          </div>
+          <div className="iconBox flex h">
+            <div style={{height:"20px"}}>
+            <Button text="Add address" filled wfull
+            onClick={() => {
+              handleLocalData({
+                type: "addAdress",
+              })}}
+             />
             </div>
           </div>
           <div>

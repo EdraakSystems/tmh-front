@@ -150,10 +150,10 @@ const getCorporateCustomers = async (corporateClientId) => {
   }
 };
 
-const getCorporateProfessionals = async (item) => {
+const getCorporateProfessionals = async (subCategoryId,gender ) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/it/front/booking/corporateprofessionals/${corporateServiceId}`
+      `http://127.0.0.1:8000/it/front/booking/corporateprofessionals/${subCategoryId}/${gender}`
     );
     return res.data;
   } catch (err) {
@@ -185,6 +185,25 @@ const getProfessionalFromCorporateServices = async (subCatId) => {
   }
 };
 
+const SetNewPrimaryAddress = async (address) => {
+  try {
+    const requestBody = {
+      newAddress: address,
+      // Add other properties if needed
+    };
+
+    const res = await axios.post(
+      "http://127.0.0.1:8000/it/customer/address/new_primary",
+      requestBody
+    );
+
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    throw new Error("Unable to fetch corporate professionals, something went wrong");
+  }
+};
+
 
 
 export {
@@ -203,6 +222,7 @@ export {
   getCorporateCustomers,
   getCorporateProfessionals,
   getProfessionalFromCorporateServices,
-  getcorporateprofessionalServices
+  getcorporateprofessionalServices,
+  SetNewPrimaryAddress
 };
 

@@ -12,6 +12,8 @@ import {
   getUsers,
   getCorporateClient,
   getCorporateCustomers,
+  getCorporateProfessionals,
+  SetNewPrimaryAddress,
   getProfessionalFromCorporateServices
 } from "@/apis"; // Import your API functions here
 import { type } from "os";
@@ -26,6 +28,9 @@ export function useDataHandler(setLoader) {
   const [cities, setCitites] = useState([]);
   const [corporatesList, setCorporateList] = useState([])
   const [corporateCustomerList, setCorporateCustomers] = useState([])
+  const [address, setAddress] = useState()
+  const [city, setCity] = useState()
+
   const router = useRouter();
 
   console.log(reduxData,"redux dtata")
@@ -113,11 +118,11 @@ export function useDataHandler(setLoader) {
       setLoader(false);
     } else if (newData.type == "gender") {
       if(localData.type == "Corporate") {
-        // console.log(localData);
         setLoader(true);
-        const res = await getProfessionalFromCorporateServices(localData?.currentSubCat.id)
         setLocalData({ ...localData, currentGender: newData.data });
         dispatch({ type: "CURRENTGENDER", payload: newData.data });
+        console.log('-----------------------------------------------------',localData);
+        const res = await getCorporateProfessionals(localData?.currentSubCat.id,newData.data.id)
         // console.log('results ::', res)
         setLocalData({ ...localData, professionals: res });
         dispatch({ type: "GETPROFESSIONALS", payload: res });
@@ -186,6 +191,21 @@ export function useDataHandler(setLoader) {
     }
     else if(newData.type === "currentDate"){
       dispatch({ type: "CURRENTDATE", payload: newData.data })
+    }
+    else if(newData.type === "address"){
+      setAddress(newData.data.target.value)
+      console.log(newData.data.target.value)
+    }
+    else if(newData.type === "newcity"){
+      setCity(newData.data.value)
+      console.log(newData.data.value)
+    }
+    else if(newData.type === "addAdress"){
+      setLocalData({ ...localData, newAdress: address + "," + city});
+      dispatch({ type: "NEWADDRESS", payload: address + "," + city });
+      console.log(localData)
+      const setAddress = await SetNewPrimaryAddress(localData.newAddress)
+      console.log(setAddress);
     }
   };
 
